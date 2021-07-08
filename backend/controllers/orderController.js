@@ -61,7 +61,7 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get all orders => /api/v1/admin/orders
+// Get all orders - ADMIN => /api/v1/admin/orders
 exports.allOrders = catchAsyncErrors(async (req, res, next) => {
   const orders = await Order.find();
 
@@ -74,5 +74,48 @@ exports.allOrders = catchAsyncErrors(async (req, res, next) => {
     success: true,
     totalAmount,
     orders,
+  });
+});
+
+// Update/Process orders - ADMIN => /api/v1/admin/order/:id
+exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order.orderStatus === "Delivered") {
+    return next(new ErrorHandler("You have already delivered this order", 400));
+  }
+
+  order.orderItems.forEach(async (item) => {
+    await updateStock(item.product, item.quantity);
+  });
+
+  order.orderStatus = req.body.status;
+  order.deliveredAt = Date.now();
+
+  await order.save();
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+async function updateStock(id, quantity) {
+  const product = await Product.findById(id);
+  product.stock = product.stock - quantity;
+  await product.save({ validateBeforeSave: false });
+}
+
+// Delete order => /api/v1/admin/order/:id
+exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+
+  if (!order) {
+    return next(new ErrorHandler("No order found with this id", 404));
+  }
+
+  await order.remove();
+
+  res.status(200).json({
+    success: true,
   });
 });

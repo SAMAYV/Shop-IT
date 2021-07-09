@@ -3,6 +3,9 @@ import {
   ALL_PRODUCTS_SUCCESS,
   ALL_PRODUCTS_FAIL,
   CLEAR_ERRORS,
+  PRODUCTS_DETAILS_REQUEST,
+  PRODUCTS_DETAILS_SUCCESS,
+  PRODUCTS_DETAILS_FAIL,
 } from "../constants/productConstants";
 
 export const productReducers = (state = { products: [] }, action) => {
@@ -21,6 +24,33 @@ export const productReducers = (state = { products: [] }, action) => {
     case ALL_PRODUCTS_FAIL:
       return {
         loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const productDetailsReducer = (state = { product: {} }, action) => {
+  switch (state.type) {
+    case PRODUCTS_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case PRODUCTS_DETAILS_SUCCESS:
+      return {
+        loading: true,
+        product: action.payload,
+      };
+    case PRODUCTS_DETAILS_FAIL:
+      return {
+        ...state,
         error: action.payload,
       };
     case CLEAR_ERRORS:

@@ -5,7 +5,6 @@ import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword, clearErrors } from "../../actions/userActions";
-import { load } from "dotenv";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

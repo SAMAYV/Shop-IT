@@ -8,7 +8,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
 
-const Login = ({ history }) => {
+const Login = ({ history, location }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,10 +19,13 @@ const Login = ({ history }) => {
     (state) => state.auth
   );
 
+  // to redirect back to shipping page after logging in
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   useEffect(() => {
     // pushing user to home page
     if (isAuthenticated) {
-      history.push("/");
+      history.push(redirect);
     }
     if (error) {
       alert.error(error);

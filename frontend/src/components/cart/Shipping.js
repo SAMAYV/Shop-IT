@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
 
 export const Shipping = ({ history }) => {
-  const countriesList = Object.values(countries);
+  const countriesListKeys = Object.keys(countries);
+  const countriesListValues = Object.values(countries);
+
   const { shippingInfo } = useSelector((state) => state.cart);
 
   const [address, setAddress] = useState(shippingInfo.address);
@@ -92,9 +94,12 @@ export const Shipping = ({ history }) => {
                 onChange={(e) => setCountry(e.target.value)}
                 required
               >
-                {countriesList.map((country) => (
-                  <option key={country.name} value={country.name}>
-                    {country.name}
+                {countriesListKeys.map((countryKey, index) => (
+                  <option
+                    key={countriesListValues[index].name}
+                    value={`${countryKey}-${countriesListValues[index].name}`}
+                  >
+                    {countriesListValues[index].name}
                   </option>
                 ))}
               </select>

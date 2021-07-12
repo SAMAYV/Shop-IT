@@ -30,7 +30,7 @@ export const ConfirmOrder = ({ history }) => {
 
     // this data is deleted when chrome is closed
     sessionStorage.setItem("OrderInfo", JSON.stringify(data));
-    history.push("/");
+    history.push("/payment");
   };
 
   return (

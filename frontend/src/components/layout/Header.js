@@ -26,7 +26,7 @@ const Header = () => {
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
             <Link to="/">
-              <img src="./images/logo.png" />
+              <img src="./images/shopit_logo.png" />
             </Link>
           </div>
         </div>
@@ -69,15 +69,14 @@ const Header = () => {
                 className="dropdown-menu"
                 aria-labelledby="dropDownMenuButton"
               >
-                {user && user.role !== "admin" ? (
-                  <Link className="dropdown-item" to="/orders/me">
-                    Orders
-                  </Link>
-                ) : (
+                {user && user.role === "admin" && (
                   <Link className="dropdown-item" to="/dashboard">
                     Dashboard
                   </Link>
                 )}
+                <Link className="dropdown-item" to="/orders/me">
+                  Orders
+                </Link>
                 <Link className="dropdown-item" to="/me">
                   Profile
                 </Link>

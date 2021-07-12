@@ -5,6 +5,7 @@ import { CheckoutSteps } from "./CheckoutSteps";
 import { useAlert } from "react-alert";
 
 import { useDispatch, useSelector } from "react-redux";
+import { createOrder, clearErrors } from "../../actions/orderActions";
 
 import {
   useStripe,
@@ -35,10 +36,28 @@ const Payment = ({ history }) => {
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
+  const { error } = useSelector((state) => state.newOrder);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, alert, error]);
+
+  const order = {
+    orderItems: cartItems,
+    shippingInfo,
+  };
 
   const orderInfo = JSON.parse(sessionStorage.getItem("OrderInfo"));
+  if (orderInfo) {
+    order.itemsPrice = orderInfo.itemsPrice;
+    order.shippingPrice = orderInfo.shippingPrice;
+    order.taxPrice = orderInfo.taxPrice;
+    order.totalPrice = orderInfo.totalPrice;
+  }
+
   const addressDetails = JSON.parse(localStorage.getItem("shippingInfo"));
   console.log(addressDetails);
 
@@ -91,6 +110,12 @@ const Payment = ({ history }) => {
         // The payment is processed or not
         if (result.paymentIntent.status === "succeeded") {
           // New Order
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
+          };
+
+          dispatch(createOrder(order));
 
           history.push("/success");
         } else {

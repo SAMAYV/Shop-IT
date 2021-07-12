@@ -105,8 +105,8 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
     });
   } else {
     product.reviews.push(review);
-    product.numOfReviews = product.reviews.length;
   }
+  product.numofReviews = product.reviews.length;
 
   product.ratings =
     product.reviews.reduce((acc, item) => item.rating + acc, 0) /
@@ -137,7 +137,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     (review) => review._id.toString() !== req.query.id.toString()
   );
 
-  const numOfReviews = reviews.length;
+  const numofReviews = reviews.length;
 
   const ratings =
     product.reviews.reduce((acc, item) => item.rating + acc, 0) /
@@ -148,7 +148,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     {
       reviews,
       ratings,
-      numOfReviews,
+      numofReviews,
     },
     {
       new: true,

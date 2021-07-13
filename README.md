@@ -33,8 +33,6 @@
 - Developed an E-Commerce Website (using MongoDB, Express, React, Redux & Node.js) where people can search, buy and save different products using checkout process, filter them and post their reviews. Used Stripe API to handle payments and Cloudinary to handle images.
 - Implemented User-Authentication and Admin Dashboard to manage all the products, orders, reviews and users. Created password reset and forgot mechanism using Mailtrap and SMTP and deployed it via Heroku.
 
-</details>
-
 ### Deployed Website Link
 
 https://my-shop-it.herokuapp.com/

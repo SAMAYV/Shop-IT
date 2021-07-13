@@ -30,6 +30,7 @@ const Login = ({ history, location }) => {
       alert.error(error);
       dispatch(clearErrors());
     }
+    // eslint-disable-next-line
   }, [dispatch, alert, isAuthenticated, error, history]);
 
   const submitHandler = (e) => {

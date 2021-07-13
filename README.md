@@ -28,12 +28,10 @@
 - Change the DB_URI to DB_LOCAL_URI to use a local database
 - Create a folder data/db inside the folder where u installed mongodb for local storage
 
-<details>
-<summary>About</summary>
+### About
 
-    - Developed an E-Commerce Website (using MongoDB, Express, React, Redux & Node.js) where people can search, buy and save different products using checkout process, filter them and post their reviews. Used Stripe API to handle payments and Cloudinary to handle images.
-    - Implemented User-Authentication and Admin Dashboard to manage all the products, orders, reviews and users. Created password reset and forgot mechanism using Mailtrap and SMTP.
-    - Used MongoDB Database and deployed via Heroku.
+- Developed an E-Commerce Website (using MongoDB, Express, React, Redux & Node.js) where people can search, buy and save different products using checkout process, filter them and post their reviews. Used Stripe API to handle payments and Cloudinary to handle images.
+- Implemented User-Authentication and Admin Dashboard to manage all the products, orders, reviews and users. Created password reset and forgot mechanism using Mailtrap and SMTP and deployed it via Heroku.
 
 </details>
 

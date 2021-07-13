@@ -4,6 +4,8 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
 
   if (process.env.NODE_ENV === "DEVELOPMENT") {
+    console.log(err);
+
     res.status(err.statusCode).json({
       success: false,
       error: err,
@@ -14,11 +16,12 @@ module.exports = (err, req, res, next) => {
 
   if (process.env.NODE_ENV === "PRODUCTION") {
     let error = { ...err };
+
     error.message = err.message;
 
     // Wrong Mongoose Object ID Error
     if (err.name === "CastError") {
-      const message = `Resource not found. Invalid ${err.path}`;
+      const message = `Resource not found. Invalid: ${err.path}`;
       error = new ErrorHandler(message, 400);
     }
 
@@ -28,7 +31,7 @@ module.exports = (err, req, res, next) => {
       error = new ErrorHandler(message, 400);
     }
 
-    // Handling Mongoose duplicate key error
+    // Handling Mongoose duplicate key errors
     if (err.code === 11000) {
       const message = `Duplicate ${Object.keys(err.keyValue)} entered`;
       error = new ErrorHandler(message, 400);
@@ -40,13 +43,13 @@ module.exports = (err, req, res, next) => {
       error = new ErrorHandler(message, 400);
     }
 
-    // Handling expired JWT error
+    // Handling Expired JWT error
     if (err.name === "TokenExpiredError") {
       const message = "JSON Web Token is expired. Try Again!!!";
       error = new ErrorHandler(message, 400);
     }
 
-    res.status(error.statusCode).json({
+    res.status(error.statusCode || 500).json({
       success: false,
       message: error.message || "Internal Server Error",
     });

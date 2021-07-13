@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
-import { CheckoutSteps } from "./CheckoutSteps";
-import { useAlert } from "react-alert";
+import CheckoutSteps from "./CheckoutSteps";
 
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder, clearErrors } from "../../actions/orderActions";
 
@@ -49,8 +49,9 @@ const Payment = ({ history }) => {
     orderItems: cartItems,
     shippingInfo,
   };
+  const addressDetails = JSON.parse(localStorage.getItem("shippingInfo"));
 
-  const orderInfo = JSON.parse(sessionStorage.getItem("OrderInfo"));
+  const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   if (orderInfo) {
     order.itemsPrice = orderInfo.itemsPrice;
     order.shippingPrice = orderInfo.shippingPrice;
@@ -58,15 +59,13 @@ const Payment = ({ history }) => {
     order.totalPrice = orderInfo.totalPrice;
   }
 
-  const addressDetails = JSON.parse(localStorage.getItem("shippingInfo"));
-  console.log(addressDetails);
-
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     document.querySelector("#pay_btn").disabled = true;
 
     let res;
@@ -80,6 +79,8 @@ const Payment = ({ history }) => {
       res = await axios.post("/api/v1/payment/process", paymentData, config);
 
       const clientSecret = res.data.client_secret;
+
+      console.log(clientSecret);
 
       if (!stripe || !elements) {
         return;
@@ -109,7 +110,6 @@ const Payment = ({ history }) => {
       } else {
         // The payment is processed or not
         if (result.paymentIntent.status === "succeeded") {
-          // New Order
           order.paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
@@ -125,9 +125,9 @@ const Payment = ({ history }) => {
     } catch (error) {
       document.querySelector("#pay_btn").disabled = false;
       alert.error(error.response.data.message);
-      console.log(error.response.message);
     }
   };
+
   return (
     <Fragment>
       <MetaData title={"Payment"} />

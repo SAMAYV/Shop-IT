@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import Loader from "../layout/Loader";
@@ -19,14 +19,13 @@ const Login = ({ history, location }) => {
     (state) => state.auth
   );
 
-  // to redirect back to shipping page after logging in
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
-    // pushing user to home page
     if (isAuthenticated) {
       history.push(redirect);
     }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());

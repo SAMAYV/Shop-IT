@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 
@@ -6,7 +6,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword, clearErrors } from "../../actions/userActions";
 
-export const NewPassword = ({ history, match }) => {
+const NewPassword = ({ history, match }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -81,3 +81,5 @@ export const NewPassword = ({ history, match }) => {
     </Fragment>
   );
 };
+
+export default NewPassword;

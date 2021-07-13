@@ -11,8 +11,12 @@ import { getOrderDetails, clearErrors } from "../../actions/orderActions";
 const OrderDetails = ({ match }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { loading, error, order } = useSelector((state) => state.orderDetails);
 
+  const {
+    loading,
+    error,
+    order = {},
+  } = useSelector((state) => state.orderDetails);
   const {
     shippingInfo,
     orderItems,
@@ -41,6 +45,7 @@ const OrderDetails = ({ match }) => {
   return (
     <Fragment>
       <MetaData title={"Order Details"} />
+
       {loading ? (
         <Loader />
       ) : (
@@ -57,7 +62,8 @@ const OrderDetails = ({ match }) => {
                 <b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}
               </p>
               <p className="mb-4">
-                <b>Address:</b> {shippingDetails}
+                <b>Address:</b>
+                {shippingDetails}
               </p>
               <p>
                 <b>Amount:</b> ${totalPrice}
@@ -99,7 +105,9 @@ const OrderDetails = ({ match }) => {
                       </div>
 
                       <div className="col-5 col-lg-5">
-                        <Link to={`/product/${item.product}`}>{item.name}</Link>
+                        <Link to={`/products/${item.product}`}>
+                          {item.name}
+                        </Link>
                       </div>
 
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">

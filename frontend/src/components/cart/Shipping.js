@@ -2,14 +2,14 @@ import React, { Fragment, useState } from "react";
 import { countries } from "countries-list";
 
 import MetaData from "../layout/MetaData";
-import { CheckoutSteps } from "./CheckoutSteps";
+import CheckoutSteps from "./CheckoutSteps";
 
 import { useDispatch, useSelector } from "react-redux";
 import { saveShippingInfo } from "../../actions/cartActions";
 
-export const Shipping = ({ history }) => {
+const Shipping = ({ history }) => {
   const countriesListKeys = Object.keys(countries);
-  const countriesListValues = Object.values(countries);
+  const countriesList = Object.values(countries);
 
   const { shippingInfo } = useSelector((state) => state.cart);
 
@@ -23,8 +23,9 @@ export const Shipping = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }));
-    history.push("/order/confirm");
+    history.push("/confirm");
   };
 
   return (
@@ -96,10 +97,10 @@ export const Shipping = ({ history }) => {
               >
                 {countriesListKeys.map((countryKey, index) => (
                   <option
-                    key={countriesListValues[index].name}
-                    value={`${countryKey}-${countriesListValues[index].name}`}
+                    key={countriesList[index].name}
+                    value={`${countryKey}-${countriesList[index].name}`}
                   >
-                    {countriesListValues[index].name}
+                    {countriesList[index].name}
                   </option>
                 ))}
               </select>
@@ -118,3 +119,5 @@ export const Shipping = ({ history }) => {
     </Fragment>
   );
 };
+
+export default Shipping;

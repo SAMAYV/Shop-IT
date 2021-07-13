@@ -9,7 +9,7 @@ const Search = ({ history }) => {
     if (keyword.trim()) {
       history.push(`/search/${keyword}`);
     } else {
-      history.push(`/`);
+      history.push("/");
     }
   };
 

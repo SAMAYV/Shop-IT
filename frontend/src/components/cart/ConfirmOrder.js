@@ -1,13 +1,12 @@
 import React, { Fragment } from "react";
-
 import { Link } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
-import { CheckoutSteps } from "./CheckoutSteps";
+import CheckoutSteps from "./CheckoutSteps";
 
 import { useSelector } from "react-redux";
 
-export const ConfirmOrder = ({ history }) => {
+const ConfirmOrder = ({ history }) => {
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
 
@@ -28,8 +27,7 @@ export const ConfirmOrder = ({ history }) => {
       totalPrice,
     };
 
-    // this data is deleted when chrome is closed
-    sessionStorage.setItem("OrderInfo", JSON.stringify(data));
+    sessionStorage.setItem("orderInfo", JSON.stringify(data));
     history.push("/payment");
   };
 
@@ -66,7 +64,7 @@ export const ConfirmOrder = ({ history }) => {
                   </div>
 
                   <div className="col-5 col-lg-6">
-                    <Link href={`/product/${item.product}`}>{item.name}</Link>
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
 
                   <div className="col-4 col-lg-4 mt-4 mt-lg-0">
@@ -118,3 +116,5 @@ export const ConfirmOrder = ({ history }) => {
     </Fragment>
   );
 };
+
+export default ConfirmOrder;

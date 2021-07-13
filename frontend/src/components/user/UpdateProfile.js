@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 
@@ -15,13 +15,14 @@ const UpdateProfile = ({ history }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState("/images/camera.jpg");
+  const [avatarPreview, setAvatarPreview] = useState(
+    "/images/default_avatar.jpg"
+  );
 
   const alert = useAlert();
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-
   const { error, isUpdated, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const UpdateProfile = ({ history }) => {
       setEmail(user.email);
       setAvatarPreview(user.avatar.url);
     }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -37,9 +39,10 @@ const UpdateProfile = ({ history }) => {
 
     if (isUpdated) {
       alert.success("User updated successfully");
-      dispatch(loadUser()); // sending request to /me and getting fresh user data
+      dispatch(loadUser());
 
-      history.push("/me"); // to go to my profile
+      history.push("/me");
+
       dispatch({
         type: UPDATE_PROFILE_RESET,
       });
@@ -69,7 +72,6 @@ const UpdateProfile = ({ history }) => {
 
     reader.readAsDataURL(e.target.files[0]);
   };
-
   return (
     <Fragment>
       <MetaData title={"Update Profile"} />

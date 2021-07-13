@@ -13,7 +13,7 @@
     "category": "Electronics",
     "seller": "Ebay",
     "stock": 50,
-    "numofReviews": 32,
+    "numOfReviews": 32,
     "reviews": []
   },
   {
@@ -30,7 +30,7 @@
     "category": "Electronics",
     "seller": "Amazon",
     "stock": 0,
-    "numofReviews": 2,
+    "numOfReviews": 2,
     "reviews": []
   },
   {
@@ -47,7 +47,7 @@
     "category": "Electronics",
     "seller": "Amazon",
     "stock": 1,
-    "numofReviews": 12,
+    "numOfReviews": 12,
     "reviews": []
   },
   {
@@ -64,7 +64,7 @@
     "category": "Headphones",
     "seller": "Amazon",
     "stock": 11,
-    "numofReviews": 112,
+    "numOfReviews": 112,
     "reviews": []
   },
   {
@@ -81,7 +81,7 @@
     "category": "Electronics",
     "seller": "Amazon",
     "stock": 122,
-    "numofReviews": 2671,
+    "numOfReviews": 2671,
     "reviews": []
   },
   {
@@ -98,7 +98,7 @@
     "category": "Accessories",
     "seller": "Amazon",
     "stock": 1123,
-    "numofReviews": 6,
+    "numOfReviews": 6,
     "reviews": []
   },
   {
@@ -115,7 +115,7 @@
     "category": "Cameras",
     "seller": "Amazon",
     "stock": 131,
-    "numofReviews": 222,
+    "numOfReviews": 222,
     "reviews": []
   },
   {
@@ -132,7 +132,7 @@
     "category": "Laptops",
     "seller": "Amazon",
     "stock": 0,
-    "numofReviews": 56,
+    "numOfReviews": 56,
     "reviews": []
   },
   {
@@ -157,7 +157,7 @@
     "category": "Food",
     "seller": "Kauffman's Fruit Farm & Market",
     "stock": 500,
-    "numofReviews": 1,
+    "numOfReviews": 1,
     "reviews": []
   }
 ]

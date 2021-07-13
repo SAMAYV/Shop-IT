@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 
@@ -9,7 +9,7 @@ import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
 
 const UpdatePassword = ({ history }) => {
   const [oldPassword, setOldPassword] = useState("");
-  const [password, setNewPassword] = useState("");
+  const [password, setPassword] = useState("");
 
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -25,7 +25,8 @@ const UpdatePassword = ({ history }) => {
     if (isUpdated) {
       alert.success("Password updated successfully");
 
-      history.push("/me"); // to go to my profile
+      history.push("/me");
+
       dispatch({
         type: UPDATE_PASSWORD_RESET,
       });
@@ -51,7 +52,7 @@ const UpdatePassword = ({ history }) => {
           <form className="shadow-lg" onSubmit={submitHandler}>
             <h1 className="mt-2 mb-5">Update Password</h1>
             <div className="form-group">
-              <label htmlFor="old_password_field">Old Password</label>
+              <label for="old_password_field">Old Password</label>
               <input
                 type="password"
                 id="old_password_field"
@@ -62,13 +63,13 @@ const UpdatePassword = ({ history }) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="new_password_field">New Password</label>
+              <label for="new_password_field">New Password</label>
               <input
                 type="password"
                 id="new_password_field"
                 className="form-control"
                 value={password}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 

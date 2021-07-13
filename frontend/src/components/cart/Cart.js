@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
 
-import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
@@ -19,18 +18,16 @@ const Cart = ({ history }) => {
   const increaseQty = (id, quantity, stock) => {
     const newQty = quantity + 1;
 
-    if (newQty > stock) {
-      return;
-    }
+    if (newQty > stock) return;
+
     dispatch(addItemToCart(id, newQty));
   };
 
   const decreaseQty = (id, quantity) => {
     const newQty = quantity - 1;
 
-    if (newQty <= 0) {
-      return;
-    }
+    if (newQty <= 0) return;
+
     dispatch(addItemToCart(id, newQty));
   };
 
@@ -54,6 +51,7 @@ const Cart = ({ history }) => {
               {cartItems.map((item) => (
                 <Fragment>
                   <hr />
+
                   <div className="cart-item" key={item.product}>
                     <div className="row">
                       <div className="col-4 col-lg-3">
@@ -85,6 +83,7 @@ const Cart = ({ history }) => {
                           >
                             -
                           </span>
+
                           <input
                             type="number"
                             className="form-control count d-inline"
@@ -141,7 +140,7 @@ const Cart = ({ history }) => {
                     $
                     {cartItems
                       .reduce(
-                        (acc, item) => acc + item.price * item.quantity,
+                        (acc, item) => acc + item.quantity * item.price,
                         0
                       )
                       .toFixed(2)}

@@ -50,7 +50,7 @@ const Sidebar = () => {
 
           <li>
             <Link to="/admin/reviews">
-              <i className="fa fa-star"></i> Users
+              <i className="fa fa-star"></i> Reviews
             </Link>
           </li>
         </ul>

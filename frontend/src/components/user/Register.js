@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import MetaData from "../layout/MetaData";
 
@@ -28,10 +28,10 @@ const Register = ({ history }) => {
   );
 
   useEffect(() => {
-    // pushing user to home page
     if (isAuthenticated) {
       history.push("/");
     }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -47,8 +47,6 @@ const Register = ({ history }) => {
     formData.set("password", password);
     formData.set("avatar", avatar);
 
-    console.log(formData);
-
     dispatch(register(formData));
   };
 
@@ -62,6 +60,7 @@ const Register = ({ history }) => {
           setAvatar(reader.result);
         }
       };
+
       reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
@@ -71,6 +70,7 @@ const Register = ({ history }) => {
   return (
     <Fragment>
       <MetaData title={"Register User"} />
+
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form
@@ -134,7 +134,7 @@ const Register = ({ history }) => {
                     name="avatar"
                     className="custom-file-input"
                     id="customFile"
-                    accept="images/*"
+                    accept="iamges/*"
                     onChange={onChange}
                   />
                   <label className="custom-file-label" htmlFor="customFile">

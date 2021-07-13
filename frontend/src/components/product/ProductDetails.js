@@ -1,18 +1,19 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Carousel } from "react-bootstrap";
+
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
+import ListReviews from "../review/ListReviews";
 
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getProductDetails,
-  newReviewDetails,
+  newReview,
   clearErrors,
 } from "../../actions/productActions";
 import { addItemToCart } from "../../actions/cartActions";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
-import ListReviews from "../review/ListReviews";
 
 const ProductDetails = ({ match }) => {
   const [quantity, setQuantity] = useState(1);
@@ -44,36 +45,37 @@ const ProductDetails = ({ match }) => {
     }
 
     if (success) {
-      alert.success("Review Posted successfully");
+      alert.success("Reivew posted successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
-  }, [dispatch, alert, error, match.params.id, success]);
+  }, [dispatch, alert, error, reviewError, match.params.id, success]);
+
+  const addToCart = () => {
+    dispatch(addItemToCart(match.params.id, quantity));
+    alert.success("Item Added to Cart");
+  };
 
   const increaseQty = () => {
     const count = document.querySelector(".count");
-    if (count.valueAsNumber >= product.stock) {
-      return;
-    }
+
+    if (count.valueAsNumber >= product.stock) return;
+
     const qty = count.valueAsNumber + 1;
     setQuantity(qty);
   };
 
   const decreaseQty = () => {
     const count = document.querySelector(".count");
-    if (count.valueAsNumber <= 1) {
-      return;
-    }
+
+    if (count.valueAsNumber <= 1) return;
+
     const qty = count.valueAsNumber - 1;
     setQuantity(qty);
   };
 
-  const addToCart = () => {
-    dispatch(addItemToCart(match.params.id, quantity));
-    alert.success("Item Added To Cart");
-  };
-
   function setUserRatings() {
     const stars = document.querySelectorAll(".star");
+
     stars.forEach((star, index) => {
       star.starValue = index + 1;
 
@@ -93,6 +95,7 @@ const ProductDetails = ({ match }) => {
             star.classList.remove("orange");
           }
         }
+
         if (e.type === "mouseover") {
           if (index < this.starValue) {
             star.classList.add("yellow");
@@ -100,6 +103,7 @@ const ProductDetails = ({ match }) => {
             star.classList.remove("yellow");
           }
         }
+
         if (e.type === "mouseout") {
           star.classList.remove("yellow");
         }
@@ -109,10 +113,12 @@ const ProductDetails = ({ match }) => {
 
   const reviewHandler = () => {
     const formData = new FormData();
+
     formData.set("rating", rating);
     formData.set("comment", comment);
     formData.set("productId", match.params.id);
-    dispatch(newReviewDetails(formData));
+
+    dispatch(newReview(formData));
   };
 
   return (
@@ -122,7 +128,7 @@ const ProductDetails = ({ match }) => {
       ) : (
         <Fragment>
           <MetaData title={product.name} />
-          <div className="row f-flex justify-content-around">
+          <div className="row d-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
               <Carousel pause="hover">
                 {product.images &&
@@ -150,7 +156,7 @@ const ProductDetails = ({ match }) => {
                   style={{ width: `${(product.ratings / 5) * 100}%` }}
                 ></div>
               </div>
-              <span id="no_of_reviews">({product.numofReviews} Reviews)</span>
+              <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
 
               <hr />
 
@@ -184,7 +190,7 @@ const ProductDetails = ({ match }) => {
               <hr />
 
               <p>
-                Status:
+                Status:{" "}
                 <span
                   id="stock_status"
                   className={product.stock > 0 ? "greenColor" : "redColor"}
@@ -215,7 +221,7 @@ const ProductDetails = ({ match }) => {
                 </button>
               ) : (
                 <div className="alert alert-danger mt-5" type="alert">
-                  Login to post your review
+                  Login to post your review.
                 </div>
               )}
 
@@ -274,8 +280,8 @@ const ProductDetails = ({ match }) => {
                           <button
                             className="btn my-3 float-right review-btn px-4 text-white"
                             onClick={reviewHandler}
-                            aria-label="Close"
                             data-dismiss="modal"
+                            aria-label="Close"
                           >
                             Submit
                           </button>

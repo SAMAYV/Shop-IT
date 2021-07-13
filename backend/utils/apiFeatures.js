@@ -3,6 +3,7 @@ class APIFeatures {
     this.query = query;
     this.queryStr = queryStr;
   }
+
   search() {
     const keyword = this.queryStr.keyword
       ? {
@@ -13,7 +14,6 @@ class APIFeatures {
         }
       : {};
 
-    console.log(keyword);
     this.query = this.query.find({ ...keyword });
     return this;
   }
@@ -23,7 +23,7 @@ class APIFeatures {
 
     // Removing fields from the query
     const removeFields = ["keyword", "limit", "page"];
-    removeFields.forEach((e1) => delete queryCopy[e1]);
+    removeFields.forEach((el) => delete queryCopy[el]);
 
     // Advance filter for price, ratings etc
     let queryStr = JSON.stringify(queryCopy);

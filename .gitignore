@@ -6,6 +6,7 @@
 /frontend/build
 
 # misc
+/.vscode
 /backend/config/config.env
 /frontend/.env.local
 /frontend/.env.development.local
